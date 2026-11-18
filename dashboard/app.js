@@ -371,7 +371,16 @@
         el('h2', { id: 'detail-title', text: row.name }),
         el('p', { class: 'sub', text: (row.category || 'Other') + ' on ' + (row.chains && row.chains.length ? row.chains.join(', ') : 'an unnamed chain') })
       ),
-      el('button', { class: 'close', type: 'button', 'aria-label': 'Close details', text: 'Close', onclick: function () { dialog.close(); } })
+      el('div', { class: 'detail-actions' },
+        el('button', { class: 'close', type: 'button', text: 'Copy link', onclick: function (e) {
+          var link = window.location.href;
+          var btn = e.currentTarget;
+          function done() { btn.textContent = 'Copied'; setTimeout(function () { btn.textContent = 'Copy link'; }, 1500); }
+          if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(link).then(done, done);
+          else done();
+        } }),
+        el('button', { class: 'close', type: 'button', 'aria-label': 'Close details', text: 'Close', onclick: function () { dialog.close(); } })
+      )
     ));
     dialog.appendChild(el('section', { class: 'detail-section' },
       el('h3', { text: 'Implied value' }),
@@ -423,5 +432,15 @@
   render();
   window.addEventListener('keydown', function (e) {
     if (e.key === 'Escape' && dialog.open) dialog.close();
+    // Press / anywhere to jump to the search box, the way a reader expects.
+    if (e.key === '/' && !dialog.open) {
+      var target = e.target;
+      var typing = target && (target.tagName === 'INPUT' || target.tagName === 'SELECT' || target.tagName === 'TEXTAREA');
+      if (!typing) {
+        e.preventDefault();
+        var box = document.getElementById('q');
+        if (box) box.focus();
+      }
+    }
   });
 })();

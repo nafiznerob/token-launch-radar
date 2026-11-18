@@ -30,7 +30,7 @@ import {
 } from 'node:fs';
 import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { boardIssue, buildRadar, dataScript, parseSnapshot } from './lib/model.ts';
+import { boardIssue, buildRadar, dataScript, parseSnapshot, rankReason } from './lib/model.ts';
 import { buildDossier } from './vendor/makefun-board.ts';
 
 /** Where this file lives, so dashboard/ and screenshots/ are found beside it. */
@@ -128,3 +128,6 @@ process.stdout.write(
     `${join(outDir, 'dashboard')} (${dashboardFiles.length} files), ` +
     `${join(outDir, 'screenshots')} (${shots.length} images) and ${join(outDir, 'dossier.json')}\n`,
 );
+for (const row of board.slice(0, 3)) {
+  process.stdout.write(`token radar: #${row.rank} ${row.name} — ${rankReason(row)}\n`);
+}

@@ -461,6 +461,24 @@ export function farmSteps(p: SnapshotProtocol, age: number | null): FarmStep[] {
   ];
 }
 
+/**
+ * One sentence saying why a row ranks where it does, from its own figures:
+ * the TVL at its category multiple, the seven-day growth, and the age it
+ * has run with no token. The dashboard shows this sentence in the detail
+ * view, so a reader never has to take the rank on trust.
+ */
+export function rankReason(row: BoardRow): string {
+  const growth = row.change_7d === null ? 'unreported growth' : `${row.change_7d > 0 ? '+' : ''}${row.change_7d.toFixed(2)}% over seven days`;
+  const age = row.age_days === null
+    ? 'an unreported listing date, so the model uses 365 days'
+    : `${row.age_days >= 365 ? `${(row.age_days / 365).toFixed(1)} years` : `${row.age_days} days`} listed with no token on record`;
+  const fall = row.change_7d !== null && row.change_7d < 0
+    ? ' Growth is negative, so the model marks it down rather than ignoring the fall.'
+    : '';
+  return `$${row.tvl_usd.toLocaleString('en-US')} of TVL at a ${row.model.category_multiple} category multiple, ` +
+    `${growth}, and ${age}.${fall} It records no token: that is what the snapshot says, never proof it has none.`;
+}
+
 /** The live-token protocols, by market cap, for the dashboard's Live token view. */
 export function liveRows(snapshot: Snapshot): LiveRow[] {
   return snapshot.protocols
