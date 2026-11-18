@@ -68,6 +68,9 @@ a { color: var(--accent); }
 .spot-rank { font-family: var(--font-num); font-size: 12px; color: var(--accent); }
 .spot-name { font-size: 17px; }
 .spot-value { font-family: var(--font-num); font-size: 15px; margin-top: var(--step-1); }
+.foot { padding-top: 0; padding-bottom: var(--step-6); color: var(--muted); font-size: 13px; }
+.foot p { max-width: 72ch; }
+.noscript { padding: var(--step-5); margin: var(--step-5) 0; }
 .cat-table { display: grid; gap: var(--step-1); }
 .cat-table h3 { margin-bottom: var(--step-1); }
 .cat-row { display: flex; justify-content: space-between; gap: var(--step-3); padding: var(--step-1) 0; border-bottom: 1px solid var(--border); font-size: 13px; }

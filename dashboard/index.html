@@ -3,12 +3,24 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Token Radar ranks pre-token protocols by implied value, from a frozen DefiLlama snapshot, with a farm plan for each one.">
 <title>Token Radar: pre-token protocols ranked by implied value</title>
 <link rel="stylesheet" href="app.css">
 </head>
 <body>
 <a class="skip" href="#board">Skip to the board</a>
-<main id="board" tabindex="-1" aria-busy="true"></main>
+<main id="board" tabindex="-1" aria-busy="true">
+<noscript>
+<p class="panel noscript">Token Radar needs JavaScript: the board, its filters and every
+detail view are rendered in this page from the data beside it, with no
+network. Enable JavaScript and reload the page.</p>
+</noscript>
+</main>
+<footer class="shell foot">
+<p>Implied value is a model, not a price and not a promise of a token.
+Snapshot: DefiLlama protocol index, 14 November 2026. Model radar-2:
+the category multiple is measured from the live market in that snapshot.</p>
+</footer>
 <script src="../data.js"></script>
 <script src="app.js"></script>
 </body>
