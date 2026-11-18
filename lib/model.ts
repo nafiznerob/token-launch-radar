@@ -479,6 +479,29 @@ export function rankReason(row: BoardRow): string {
     `${growth}, and ${age}.${fall} It records no token: that is what the snapshot says, never proof it has none.`;
 }
 
+/**
+ * One line per category on the board: how many rows it holds, the multiple
+ * the market gave it, and its best protocol. The program prints these
+ * lines when it runs, so a run's pricing can be read at a glance.
+ */
+export function categorySummary(board: BoardRow[]): { category: string; rows: number; multiple: number; best: string }[] {
+  const byCat = new Map<string, BoardRow[]>();
+  for (const row of board) {
+    const key = row.category ?? 'Other';
+    const list = byCat.get(key) ?? [];
+    list.push(row);
+    byCat.set(key, list);
+  }
+  return [...byCat.entries()]
+    .map(([category, rows]) => ({
+      category,
+      rows: rows.length,
+      multiple: rows[0]!.model.category_multiple,
+      best: rows[0]!.name,
+    }))
+    .sort((a, b) => b.rows - a.rows || (a.category < b.category ? -1 : 1));
+}
+
 /** The live-token protocols, by market cap, for the dashboard's Live token view. */
 export function liveRows(snapshot: Snapshot): LiveRow[] {
   return snapshot.protocols

@@ -30,7 +30,7 @@ import {
 } from 'node:fs';
 import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { boardIssue, buildRadar, dataScript, parseSnapshot, rankReason } from './lib/model.ts';
+import { boardIssue, buildRadar, categorySummary, dataScript, parseSnapshot, rankReason } from './lib/model.ts';
 import { buildDossier } from './vendor/makefun-board.ts';
 
 /** Where this file lives, so dashboard/ and screenshots/ are found beside it. */
@@ -130,4 +130,9 @@ process.stdout.write(
 );
 for (const row of board.slice(0, 3)) {
   process.stdout.write(`token radar: #${row.rank} ${row.name} — ${rankReason(row)}\n`);
+}
+for (const cat of categorySummary(board).slice(0, 5)) {
+  process.stdout.write(
+    `token radar: ${cat.category}: ${cat.rows} rows at ${cat.multiple}, best ${cat.best}\n`,
+  );
 }
